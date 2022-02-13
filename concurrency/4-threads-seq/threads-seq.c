@@ -88,7 +88,7 @@ int main(int argc, char* argv[])
 	sem_unlink("/sem1");
 	sem_unlink("/sem2");
 	sem_unlink("/sem3");
-	sem_unlink("/sem3");
+	sem_unlink("/sem4");
 
 	/* Using POSIX named semaphores as POSIX unnamed semaphores seem to be deprecated on macos */
 	if ((t1_sem = sem_open("/sem1", O_CREAT, 0644, 1)) == SEM_FAILED) {
@@ -140,7 +140,7 @@ int main(int argc, char* argv[])
 	sem_unlink("/sem1");
 	sem_unlink("/sem2");
 	sem_unlink("/sem3");
-	sem_unlink("/sem3");
+	sem_unlink("/sem4");
 
 	return 0;
 }
