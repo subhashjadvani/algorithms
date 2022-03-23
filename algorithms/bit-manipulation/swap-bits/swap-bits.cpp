@@ -4,7 +4,8 @@ Write a function that swaps n bits at given two positions and returns the result
 It is also given that the two sets of bits do not overlap.
 
 Example:
- p = 15 (15 > binary : 00001111)
+                       76 54 32 10 
+ x = 15 (15 > binary : 00 00 11 11)
  m = 2, n = 5 (3rd and 6th bit from right)
  q = 2 (No. of consecutive bits in each sequence)
  output: = 99 (binary--> 01100011)
@@ -16,7 +17,7 @@ Example:
 #include <stdlib.h>
 #include <math.h>
 
-int swap_bits(int x, int pos1, int pos2, int bits)
+int swap_bits(int x, int pos1 /* m */, int pos2 /* n */, int bits /* q */)
 {
 	int bitmask = (1 << bits) - 1;
 
