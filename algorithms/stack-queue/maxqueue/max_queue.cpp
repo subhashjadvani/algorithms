@@ -1,3 +1,7 @@
+/*
+ Queue with Max API (Implement a queue with Enqueue, Dequeue and max operations. 
+  The max operation returns the maximum element currently stored in the queue.)
+ */
 #include <stdint.h> 
 #include <stdio.h>
 #include <stdlib.h>
