@@ -25,10 +25,11 @@ void* aligned_malloc(size_t bytes, size_t alignment)
 }
 void aligned_free(void* p)
 {
-    free ((void*)(*((size_t*)p - 1)));
+    free((void*)*((uintptr_t*)p - 1));
 }
+
 int main(void) {
-    void *address = aligned_malloc(100, 8);
+    void *address = aligned_malloc(100, 128);
 
     printf("aligned address: %p\n", address);
 
