@@ -1,9 +1,6 @@
 /*
-Write a function which will replace num of bits starting
-from LSB (least significant bit) position with data in the regData.  
-For example: if the regData is 100 (0x64), lsbPosition is 4, numOfBits is 4,
-	     data is 15 (0xf) then your program should return 244 (0xF4).
-*/
+ * Problem: Multiple two numbers without using multiplication operator
+ */
 
 #include <stdint.h> 
 #include <stdio.h>
