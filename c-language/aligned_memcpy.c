@@ -1,3 +1,17 @@
+// Copy all data in src to dst, starting at the first aligned address within the dst buffer.  
+// @param dst - pointer to destination buffer 
+// @param src - pointer to src buffer 
+// @param dst_len - size of destination buffer 
+// @param src_len - size of source buffer 
+// @param alignment - number of bytes to align to. Valid alignment params are powers of 2
+// @return pointer to the copied data. return nullptr if failed to copy
+/*
+void* memcpy_aligned( void* dst, const void* src, size_t dst_len, size_t src_len, uint8_t alignment) {
+// your implementation
+
+}
+*/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
