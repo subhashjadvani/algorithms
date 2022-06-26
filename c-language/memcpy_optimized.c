@@ -1,10 +1,8 @@
 void* wordwise_unaligned_memcpy(void* dst, void *src, size_t sz) {
-    uintptr_t* ps;
-    uintptr_t* pd;
-    uintptr_t x = c & 0xff;
-    byte* pps = (byte*)src;
-    byte* ppd = (byte*)dst;
-    byte xx = c & 0xff;
+    uintptr_t* psrc_word;
+    uintptr_t* pdst_word;
+    uint8_t* pps = (uint8_t*)src;
+    uint8_t* ppd = (uint8_t*)dst;
     size_t tail;
     int i;
     int bytes_per_word;
@@ -31,17 +29,17 @@ void* wordwise_unaligned_memcpy(void* dst, void *src, size_t sz) {
         *ppd++ = *pps++;
     
     tail = sz & (bytes_per_word - 1);
-    pd = (uintptr_t*)ppd;
-    ps = (uintptr_t*)pps;
+    pdst_word = (uintptr_t*)ppd;
+    psrc_word = (uintptr_t*)pps;
 
     /* Main loop. */
-    sz >>= log(bytes_per_word);
+    sz >>= shift;
     while (sz--)
-        *pd++ = *ps++;
+        *pdst_word++ = *psrc_word++;
 
     /* Epilogue. */
-    ppd = (byte*)pd;
-    pps = (byte*)ps;
+    ppd = (uint8_t*)pdst_word;
+    pps = (uint8_t*)psrc_word;
     while (tail--)
         *ppd++ = *pps++;
 
