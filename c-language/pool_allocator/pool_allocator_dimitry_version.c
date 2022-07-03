@@ -1,3 +1,8 @@
+/*
+ * Same as http://dmitrysoshnikov.com/compilers/writing-a-pool-allocator/ but in C language
+ * Warning: not tested!
+ */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
