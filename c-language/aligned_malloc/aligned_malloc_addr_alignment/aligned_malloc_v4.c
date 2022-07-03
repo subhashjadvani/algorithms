@@ -10,19 +10,30 @@ which can be in the extra space allocated.
 #include <stdlib.h>
 #include <stdint.h>
 
-void* malloc_aligned(size_t size, size_t alignment) {
+void* malloc_aligned(size_t size, size_t alignment) 
+{
+	/*
+	 * allocate extra memory for alignment and
+	 * also to save the original pointer returned
+	 * by malloc
+	 */
 	size_t extra = alignment - 1 + sizeof(void*);
 	void* base = malloc(size + extra);
+
+	/* move the pointer forward by "extra" bytes */
 	size_t aux = ((size_t)base) + extra;
-	aux = aux - (aux % alignment);
+	/* find the aligned address */
+	aux = aux - (aux % alignment); /* if alignenet is power of 2 then we could have use "aux = (aux & (alignment - 1))" */
 	void* ans = (void*)aux;
+
+	/* save original pointer returned from malloc */
 	*((uintptr_t*)ans - 1) = (uintptr_t)base;
-	//ans[-1] = base;
 
 	return ans;
 }
 
-void free_aligned(void* ptr) {
+void free_aligned(void* ptr)
+{
 	free((void*)*((uintptr_t*)ptr - 1));
 }
 
