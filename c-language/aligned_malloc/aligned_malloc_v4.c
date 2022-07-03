@@ -12,12 +12,13 @@ which can be in the extra space allocated.
 
 void* malloc_aligned(size_t size, size_t alignment) {
 	size_t extra = alignment - 1 + sizeof(void*);
+	
 	void* base = malloc(size + extra);
 	size_t aux = ((size_t)base) + extra;
 	aux = aux - (aux % alignment);
+	// aux = aux - (aux & (alignment - 1)); // if alignment is power of 2
 	void* ans = (void*)aux;
 	*((uintptr_t*)ans - 1) = (uintptr_t)base;
-	//ans[-1] = base;
 
 	return ans;
 }
