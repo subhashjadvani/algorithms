@@ -34,11 +34,11 @@ typedef struct timer64_ctx {
 static void cb_internal(void *data) {
 	timer64_ctx_t *ctx = (timer64_ctx_t *)data;
 
-	ctx->upper_count--;
 	if (ctx->upper_count == 0) {
 		ctx->client_cb((void*)ctx->client_data);
 		free(ctx);
 	} else {
+		ctx->upper_count--;
 		start_timer_32bit(MAX_32BIT_TIMEOUT, cb_internal, (unsigned long)ctx);
 	}
 }
@@ -57,6 +57,7 @@ void start_timer_64bit(uint64_t timeout, cb_t func, unsigned long data)
 	if (ctx->lower_count) {
 		start_timer_32bit(ctx->lower_count, cb_internal, (unsigned long)ctx);
 	} else if (ctx->upper_count) {
+		ctx->upper_count--;
 		start_timer_32bit(MAX_32BIT_TIMEOUT, cb_internal, (unsigned long)ctx);
 	}
 }
