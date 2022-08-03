@@ -20,18 +20,21 @@ void my_init(void) {
 	free_list->next = NULL;
 }
 
-void* my_malloc(size_t cnt)
+void* my_malloc(size_t size)
 {
 	block *curr = free_list;
 	block *prev = NULL;
 
 	// edge case
-	if (cnt == 0)
+	if (size == 0)
 		return NULL;
 
+	// handling the alignment
+	// we are handling default alignment then we may add ALIGN_SIZE to size
+
 	while (curr != NULL) {
-		if (curr->len >= cnt) {
-			int32_t remainder = curr->len - cnt - sizeof(block);
+		if (curr->len >= size) {
+			int32_t remainder = curr->len - size - sizeof(block);
 
 			// we are allocating the current entry so remove the entry from the free_list
 			if (prev == NULL) {
@@ -43,11 +46,11 @@ void* my_malloc(size_t cnt)
 
 			// split the list
 			if (remainder > 0) {
-				block *new = (block*) ((uintptr_t)curr->data + cnt);
+				block *new = (block*) ((uintptr_t)curr->data + size);
 				new->len = remainder;
 				new->next = free_list;
 				free_list = new;
-				curr->len = cnt;
+				curr->len = size;
 			}
 			break;
 		} else {
@@ -57,7 +60,7 @@ void* my_malloc(size_t cnt)
 	}
 
 	if (curr != NULL)
-		return curr->data;
+		return curr->data; // return (void*)((uintptr_t)curr->data + sizeof(block));
 	else
 		return NULL;
 }
