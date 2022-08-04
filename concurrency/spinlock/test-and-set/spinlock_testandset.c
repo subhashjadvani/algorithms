@@ -1,8 +1,8 @@
-typedef struct __lock_t {
+typedef struct __spinlock_t {
     int flag;
-} lock_t;
+} spinlock_t;
 
-void init(lock_t *lock) {
+void init(spinlock_t *lock) {
     // 0: lock is available, 1: lock is held
     lock->flag = 0;
 }
@@ -13,17 +13,17 @@ int TestAndSet(int *old_ptr, int new) {
     return old;         // return the old value
 }
 
-void lock(lock_t *lock) {
+void lock(spinlock_t *lock) {
     while (TestAndSet(&lock->flag, 1) == 1)
         ; // spin-wait (do nothing)
 }
 
-void unlock(lock_t *lock) {
+void unlock(spinlock_t *lock) {
     lock->flag = 0;
 }
 
 int main() {
-	lock_t l;
+	spinlock_t l;
 	init(&l);
 
 	lock(&l);
